@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 export class ExampleService {
   constructor(private configService: ConfigService<Environment>) {}
 
-  getRunningEnvironment() {
+  getRunningEnvironment(): string {
     return this.configService.get('NODE_ENV');
   }
 }
