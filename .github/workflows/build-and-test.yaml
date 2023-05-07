@@ -13,4 +13,4 @@ jobs:
       - run: pnpm update
       - run: pnpm install
       - run: pnpm run build
-      - run: echo "Build done"
+      - run: pnpm run test
