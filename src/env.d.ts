@@ -4,8 +4,9 @@
 */
 
 interface Environment {
-  POSTGRES_USER: string;
-  POSTGRES_PASSWORD: string;
-  POSTGRES_DB: string;
+  DB_USER: string;
+  DB_PASSWORD: string;
+  DB_NAME: string;
+  DB_HOST: string;
   NODE_ENV: 'development' | 'production';
 }
