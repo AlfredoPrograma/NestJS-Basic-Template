@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { TypeOrmConfigService } from './core/services/type-orm-config.service';
+import { TypeOrmConfigService } from '@/core/services/type-orm-config.service';
 
-import { ExampleModule } from './example/example.module';
+import { ExampleModule } from '@/example/example.module';
 
 @Module({
   imports: [
