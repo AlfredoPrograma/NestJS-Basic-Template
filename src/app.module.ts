@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { ExampleModule } from './example/example.module';
 
 @Module({
-  imports: [],
+  imports: [ConfigModule.forRoot(), ExampleModule],
   controllers: [],
   providers: [],
 })
