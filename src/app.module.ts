@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from '@/core/services/type-orm-config.service';
 
 import { ExampleModule } from '@/example/example.module';
+import { AuthModule } from '@/auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ExampleModule } from '@/example/example.module';
       useClass: TypeOrmConfigService,
     }),
     ExampleModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [TypeOrmConfigService],
