@@ -7,6 +7,7 @@ import { EncryptService } from '@/core/services/encrypt.service';
 
 import { ExampleModule } from '@/example/example.module';
 import { AuthModule } from '@/auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AuthModule } from '@/auth/auth.module';
     }),
     ExampleModule,
     AuthModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [TypeOrmConfigService, EncryptService],

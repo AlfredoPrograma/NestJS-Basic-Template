@@ -6,6 +6,7 @@ export const CreateUserDtoStub: CreateUserDto = {
 };
 
 export const NewUserStub: User = {
-  ...CreateUserDtoStub,
+  email: CreateUserDtoStub.email,
+  password: `hashed-${CreateUserDtoStub.password}`,
   userId: '123',
 };

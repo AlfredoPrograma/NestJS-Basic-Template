@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-
-export interface IEncryptService {
-  hashPassword(password: string): Promise<string>;
-  comparePassword(password: string, hash: string): Promise<boolean>;
-}
+import { EncryptServiceAdapter } from '../adapters/encrypt-service.adapter';
 
 @Injectable()
-export class EncryptService implements IEncryptService {
+export class EncryptService implements EncryptServiceAdapter {
   private DIFFICULTY = 12;
   private encrypter = bcrypt;
 
