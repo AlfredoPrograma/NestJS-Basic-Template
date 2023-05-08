@@ -2,10 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../auth.service';
 
 import { EncryptService } from '../encrypt.service';
-import { User } from '../../core/models/user';
-import { MockEncryptService, MockUsersRepository } from './mocks';
+import { MockEncryptService, MockUsersService } from './mocks';
 import { CreateUserDtoStub, NewUserStub } from './stubs';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import { UsersService } from '@/users/users.service';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -15,7 +14,7 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         { useClass: MockEncryptService, provide: EncryptService },
-        { useClass: MockUsersRepository, provide: getRepositoryToken(User) },
+        { useClass: MockUsersService, provide: UsersService },
       ],
     }).compile();
 
