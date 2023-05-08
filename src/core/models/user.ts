@@ -11,3 +11,8 @@ export class User {
   @Column()
   password: string;
 }
+
+export class CreateUserDto {
+  email: string;
+  password: string;
+}
