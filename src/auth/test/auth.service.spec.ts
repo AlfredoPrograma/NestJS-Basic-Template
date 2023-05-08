@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../auth.service';
 
-import { EncryptService } from '../../core/services/encrypt.service';
+import { EncryptService } from '../encrypt.service';
 import { User } from '../../core/models/user';
 import { MockEncryptService, MockUsersRepository } from './mocks';
 import { CreateUserDtoStub, NewUserStub } from './stubs';

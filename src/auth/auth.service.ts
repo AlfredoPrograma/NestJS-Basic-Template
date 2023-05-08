@@ -1,7 +1,7 @@
 import { CreateUserDto } from '../core/models/user';
 import { Injectable } from '@nestjs/common';
 
-import { EncryptService } from '../core/services/encrypt.service';
+import { EncryptService } from './encrypt.service';
 import { AuthServiceAdapter } from '@/core/adapters/auth-service.adapter';
 import { UsersService } from '@/users/users.service';
 
