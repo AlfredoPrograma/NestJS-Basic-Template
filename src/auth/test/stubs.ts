@@ -1,4 +1,4 @@
-import { CreateUserDto, User } from '@/core/models/user';
+import { CreateUserDto, User } from 'core/models/user';
 
 export const CreateUserDtoStub: CreateUserDto = {
   email: 'stub-user@test.com',

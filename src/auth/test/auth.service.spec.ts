@@ -4,7 +4,7 @@ import { AuthService } from '../auth.service';
 import { EncryptService } from '../encrypt.service';
 import { MockEncryptService, MockUsersService } from './mocks';
 import { CreateUserDtoStub, NewUserStub } from './stubs';
-import { UsersService } from '@/users/users.service';
+import { UsersService } from 'users/users.service';
 
 describe('AuthService', () => {
   let service: AuthService;
