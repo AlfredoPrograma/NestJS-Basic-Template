@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { AuthServiceAdapter } from 'core/adapters/auth-service.adapter';
+import { AuthServiceAdapter } from 'core/adapters/services/auth-service.adapter';
 import { UsersService } from 'users/users.service';
 import { CreateUserDto } from 'core/models/user';
 

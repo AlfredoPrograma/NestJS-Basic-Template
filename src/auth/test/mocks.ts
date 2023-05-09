@@ -1,5 +1,5 @@
-import { EncryptServiceAdapter } from 'core/adapters/encrypt-service.adapter';
-import { UsersServiceAdapter } from 'core/adapters/users-service.adapter';
+import { EncryptServiceAdapter } from 'core/adapters/services/encrypt-service.adapter';
+import { UsersServiceAdapter } from 'core/adapters/services/users-service.adapter';
 import { CreateUserDto } from 'core/models/user';
 export class MockEncryptService implements EncryptServiceAdapter {
   async hashPassword(password: string) {
