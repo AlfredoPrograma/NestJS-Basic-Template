@@ -10,6 +10,12 @@ export class UsersService implements UsersServiceAdapter {
     @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
 
+  async findByEmail(email: string): Promise<User> {
+    const foundUser = await this.usersRepository.findOne({ where: { email } });
+
+    return foundUser;
+  }
+
   async create(user: CreateUserDto): Promise<User> {
     return await this.usersRepository.save(user);
   }

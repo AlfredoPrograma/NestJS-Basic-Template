@@ -1,3 +1,7 @@
+import { CreateUserDto, User } from 'core/models/user';
+import { FindOneOptions } from 'typeorm';
+
 export interface UsersRepositoryAdapter {
-  create(user: any): Promise<any>;
+  save(data: CreateUserDto): Promise<User>;
+  findOne(options: FindOneOptions<User>): Promise<User>;
 }
