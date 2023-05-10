@@ -1,4 +1,5 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
+import { SerializeInterceptor } from 'core/interceptors/SerializeInterceptor';
 import { CreateUserDto } from 'core/models/user';
 import { AuthService } from './auth.service';
 
@@ -7,7 +8,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/sign-up')
-  async signUp(data: CreateUserDto) {
+  @UseInterceptors(new SerializeInterceptor(['password']))
+  async signUp(@Body() data: CreateUserDto) {
     const user = await this.authService.signUp(data);
 
     return { user };
