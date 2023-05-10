@@ -1,6 +1,8 @@
 import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
+
 import { SerializeInterceptor } from 'core/interceptors/SerializeInterceptor';
 import { CreateUserDto } from 'core/models/user';
+
 import { AuthService } from './auth.service';
 
 @Controller('auth')
