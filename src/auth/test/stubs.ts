@@ -1,12 +1,12 @@
 import { CreateUserDto, User } from 'core/models/user';
 
-export const CreateUserDtoStub: CreateUserDto = {
+export const createUserStub: CreateUserDto = {
   email: 'stub-user@test.com',
   password: 'stub-password',
 };
 
-export const NewUserStub: User = {
-  email: CreateUserDtoStub.email,
-  password: `hashed-${CreateUserDtoStub.password}`,
-  userId: '123',
+export const newUserStub: User = {
+  email: createUserStub.email,
+  password: `hashed-${createUserStub.password}`,
+  userId: 'user-id',
 };

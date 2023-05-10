@@ -3,7 +3,7 @@ import { AuthService } from '../auth.service';
 
 import { EncryptService } from '../encrypt.service';
 import { MockEncryptService, MockUsersService } from './mocks';
-import { CreateUserDtoStub, NewUserStub } from './stubs';
+import { createUserStub, newUserStub } from './stubs';
 import { UsersService } from 'users/users.service';
 
 describe('AuthService', () => {
@@ -25,11 +25,9 @@ describe('AuthService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should create new user', async () => {
-    // act
-    const result = await service.signUp(CreateUserDtoStub);
+  it('should create sign up new user', async () => {
+    const result = await service.signUp(createUserStub);
 
-    // assert
-    expect(result).toEqual(NewUserStub);
+    expect(result).toEqual(newUserStub);
   });
 });

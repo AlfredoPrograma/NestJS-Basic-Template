@@ -21,8 +21,8 @@ export class AuthService implements AuthServiceAdapter {
       password: encryptedPassword,
     };
 
-    const createdUser = await this.usersService.create(newUser);
+    const registeredUser = await this.usersService.create(newUser);
 
-    return createdUser;
+    return registeredUser;
   }
 }
