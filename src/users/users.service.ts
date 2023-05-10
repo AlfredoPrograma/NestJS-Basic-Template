@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 
 import { UsersServiceAdapter } from 'core/adapters/services/users-service.adapter';
 import { CreateUserDto, User } from 'core/models/user';
+import { UserErrors } from 'core/errors/users.errors';
 @Injectable()
 export class UsersService implements UsersServiceAdapter {
   constructor(
@@ -16,7 +17,11 @@ export class UsersService implements UsersServiceAdapter {
     return foundUser;
   }
 
-  async create(user: CreateUserDto): Promise<User> {
+  async create(user: CreateUserDto): Promise<User | UserErrors> {
+    const foundUser = await this.findByEmail(user.email);
+
+    if (foundUser) return UserErrors.USER_ALREADY_REGISTERED;
+
     return await this.usersRepository.save(user);
   }
 }

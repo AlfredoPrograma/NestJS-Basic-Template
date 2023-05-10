@@ -1,11 +1,7 @@
-import { CreateUserDto, User } from 'core/models/user';
+import { User } from 'core/models/user';
 
-export const createUserDtoStub: CreateUserDto = {
-  email: 'test@mail.com',
-  password: '123456',
-};
-
-export const userStub: User = {
-  ...createUserDtoStub,
+export const registeredUser: User = {
   userId: 'user-id',
+  email: 'registered@test.com',
+  password: '123456',
 };

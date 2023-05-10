@@ -1,7 +1,7 @@
 import { UsersRepositoryAdapter } from 'core/adapters/repositories/users-repository.adapter';
 import { CreateUserDto, User } from 'core/models/user';
 import { FindOneOptions, FindOptionsWhere } from 'typeorm';
-import { userStub } from './stubs';
+import { registeredUser } from './stubs';
 
 export const MockUsersRepository: UsersRepositoryAdapter = {
   save: (data: CreateUserDto) => {
@@ -11,10 +11,10 @@ export const MockUsersRepository: UsersRepositoryAdapter = {
   findOne: (options: FindOneOptions<User>) => {
     const { email } = options.where as FindOptionsWhere<User>;
 
-    if (email !== userStub.email) {
+    if (email !== registeredUser.email) {
       return Promise.resolve(null);
     }
 
-    return Promise.resolve(userStub);
+    return Promise.resolve(registeredUser);
   },
 };
