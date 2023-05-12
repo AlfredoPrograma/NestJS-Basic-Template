@@ -20,7 +20,7 @@ export class UsersService implements UsersServiceAdapter {
   async create(user: CreateUserDto): Promise<User | UserErrors> {
     const foundUser = await this.findByEmail(user.email);
 
-    if (foundUser) return UserErrors.USER_ALREADY_REGISTERED;
+    if (foundUser) throw new Error(UserErrors.USER_ALREADY_REGISTERED);
 
     return await this.usersRepository.save(user);
   }

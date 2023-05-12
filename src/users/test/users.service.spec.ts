@@ -49,7 +49,7 @@ describe('UsersService', () => {
 
     const result = await service.create(user);
 
-    expect(result).toEqual(UserErrors.USER_ALREADY_REGISTERED);
+    expect(result).toThrow(UserErrors.USER_ALREADY_REGISTERED);
   });
 
   it('should create a user', async () => {
