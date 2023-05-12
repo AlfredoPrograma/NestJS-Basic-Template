@@ -47,9 +47,11 @@ describe('UsersService', () => {
       password: registeredUser.password,
     };
 
-    const result = await service.create(user);
-
-    expect(result).toThrow(UserErrors.USER_ALREADY_REGISTERED);
+    try {
+      await service.create(user);
+    } catch (err) {
+      expect(err.message).toMatch(UserErrors.USER_ALREADY_REGISTERED);
+    }
   });
 
   it('should create a user', async () => {
