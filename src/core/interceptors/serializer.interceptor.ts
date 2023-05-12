@@ -5,6 +5,8 @@ export class SerializeInterceptor implements NestInterceptor {
   constructor(private omitKeys: string[]) {}
 
   private serialize(root: Record<string, any>, merged: Record<string, any>) {
+    if (!root) return;
+
     for (const key of Object.keys(root)) {
       if (typeof root[key] === 'object') {
         const nestedSerialized = {};

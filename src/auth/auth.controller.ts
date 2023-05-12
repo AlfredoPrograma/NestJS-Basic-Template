@@ -8,6 +8,12 @@ import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
+  private errorHandlers = {
+    [UserErrors.USER_ALREADY_REGISTERED]: () => {
+      throw new BadRequestException(UserErrors.USER_ALREADY_REGISTERED);
+    },
+  };
+
   constructor(private readonly authService: AuthService) {}
 
   @Post('/sign-up')
@@ -19,10 +25,9 @@ export class AuthController {
       return { user };
     } catch (error) {
       const { message } = error;
+      const handler = this.errorHandlers[message];
 
-      if (message === UserErrors.USER_ALREADY_REGISTERED) {
-        throw new BadRequestException(message);
-      }
+      if (handler) handler();
     }
   }
 }
