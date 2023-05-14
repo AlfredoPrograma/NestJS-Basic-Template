@@ -11,3 +11,8 @@ export class User {
   @Column()
   password: string;
 }
+
+export interface CreateUserDto {
+  email: string;
+  password: string;
+}

@@ -7,6 +7,7 @@ import { UsersService } from '../users.service';
 import { User } from '@/core/models/entities';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { randomUUID } from 'crypto';
+import { CreateUserDto } from '@/core/models/user';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -54,14 +55,68 @@ describe('UsersService', () => {
     expect(foundUser).toEqual(expectedUser);
   });
 
-  it('should throw error if user not found', async () => {
+  it('should return null if user not found', async () => {
     // Arrange
     const email = 'test@mail.com';
-    const expectedError = new Error('User not found');
-
     mockUsersRepository.findOne.mockResolvedValueOnce(null);
 
+    // Act
+    const expectedNull = await service.findByEmail(email);
+
+    // Assert
+    expect(expectedNull).toBeNull();
+  });
+
+  it('should create new user', async () => {
+    // Arrange
+    const payload: CreateUserDto = {
+      email: 'test@mail.com',
+      password: 'secretPassword',
+    };
+
+    const generateUser = () => {
+      const user = new User();
+      user.email = payload.email;
+      user.id = randomUUID();
+      user.password = payload.password;
+
+      return user;
+    };
+
+    const expectedUser = generateUser();
+    mockUsersRepository.findOne.mockResolvedValueOnce(null);
+    mockUsersRepository.save.mockResolvedValueOnce(expectedUser);
+
+    // Act
+    const createdUser = await service.create(payload);
+
+    // Assert
+    expect(createdUser).toEqual(expectedUser);
+  });
+
+  it('should throw error if on user creation email is already taken', async () => {
+    // Arrange
+    const payload: CreateUserDto = {
+      email: 'test@mail.com',
+      password: 'secretPassword',
+    };
+
+    const generateUser = () => {
+      const user = new User();
+      user.email = payload.email;
+      user.id = randomUUID();
+      user.password = payload.password;
+
+      return user;
+    };
+
+    const savedUser = generateUser();
+
+    mockUsersRepository.findOne.mockResolvedValueOnce(savedUser);
+
     // Act / Assert
-    await expect(service.findByEmail(email)).rejects.toThrow(expectedError);
+    await expect(service.create(payload)).rejects.toThrow(
+      'User already exists',
+    );
   });
 });

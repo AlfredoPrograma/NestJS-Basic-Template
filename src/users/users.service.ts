@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { User } from '@/core/models/entities';
+import { CreateUserDto } from '@/core/models/user';
 @Injectable()
 export class UsersService {
   constructor(
@@ -12,10 +13,18 @@ export class UsersService {
   async findByEmail(email: string): Promise<User> {
     const foundUser = await this.usersRepository.findOne({ where: { email } });
 
-    if (!foundUser) {
-      throw new Error('User not found');
+    return foundUser;
+  }
+
+  async create(payload: CreateUserDto): Promise<User> {
+    const foundUser = await this.findByEmail(payload.email);
+
+    if (foundUser) {
+      throw new Error('User already exists');
     }
 
-    return foundUser;
+    const createdUser = await this.usersRepository.save(payload);
+
+    return createdUser;
   }
 }
