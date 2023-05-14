@@ -10,6 +10,12 @@ export class UsersService {
   ) {}
 
   async findByEmail(email: string): Promise<User> {
-    return this.usersRepository.findOne({ where: { email } });
+    const foundUser = await this.usersRepository.findOne({ where: { email } });
+
+    if (!foundUser) {
+      throw new Error('User not found');
+    }
+
+    return foundUser;
   }
 }
