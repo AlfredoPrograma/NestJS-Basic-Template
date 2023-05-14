@@ -8,6 +8,7 @@ import { User } from '@/core/models/entities';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { randomUUID } from 'crypto';
 import { CreateUserDto } from '@/core/models/user';
+import { UserErrors } from '../errors/user.errors';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -116,7 +117,7 @@ describe('UsersService', () => {
 
     // Act / Assert
     await expect(service.create(payload)).rejects.toThrow(
-      'User already exists',
+      UserErrors.USER_ALREADY_EXISTS,
     );
   });
 });

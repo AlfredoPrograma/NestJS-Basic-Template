@@ -4,6 +4,9 @@ import { Repository } from 'typeorm';
 
 import { User } from '@/core/models/entities';
 import { CreateUserDto } from '@/core/models/user';
+import { ServiceError } from '@/core/errors/ServiceError';
+import { UserErrors } from './errors/user.errors';
+import { Services } from '@/core/enums/services.enum';
 @Injectable()
 export class UsersService {
   constructor(
@@ -20,7 +23,11 @@ export class UsersService {
     const foundUser = await this.findByEmail(payload.email);
 
     if (foundUser) {
-      throw new Error('User already exists');
+      throw new ServiceError({
+        message: UserErrors.USER_ALREADY_EXISTS,
+        service: Services.USERS_SERVICE,
+        params: [payload.email],
+      });
     }
 
     const createdUser = await this.usersRepository.save(payload);
