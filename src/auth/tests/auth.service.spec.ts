@@ -1,11 +1,13 @@
-import { CreateUserDto, SignInUserDto } from '@/core/models/user';
 import { UsersService } from '@/users/users.service';
 import { createMock } from '@golevelup/ts-jest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { randomUUID } from 'crypto';
+
+import { CreateUserDto, SignInUserDto } from '@/core/models/user';
+
 import { AuthService } from '../auth.service';
 import { EncryptService } from '../encrypt.service';
-import { async } from 'rxjs';
+import { InvalidCredentialsException } from '../errors/auth.errors';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -86,5 +88,41 @@ describe('AuthService', () => {
         email: signInUserPayload.email,
       },
     });
+  });
+
+  it('should throw InvalidCredentialsException if target user is not found', async () => {
+    // Arrange
+    const signInUserPayload: SignInUserDto = {
+      email: 'test@mail.com',
+      password: '123456',
+    };
+
+    mockUsersService.findByEmail.mockResolvedValue(null);
+
+    // Act & Assert
+    await expect(service.signIn(signInUserPayload)).rejects.toThrowError(
+      new InvalidCredentialsException(),
+    );
+  });
+
+  it('should throw InvalidCredentialsException if given password is invalid', async () => {
+    // Arrange
+    const signInUserPayload: SignInUserDto = {
+      email: 'test@mail.com',
+      password: '123456',
+    };
+
+    mockUsersService.findByEmail.mockResolvedValue({
+      id: randomUUID(),
+      email: signInUserPayload.email,
+      password: 'encryptedPassword',
+    });
+
+    mockEncryptService.validatePassword.mockResolvedValue(false);
+
+    // Act & Assert
+    await expect(service.signIn(signInUserPayload)).rejects.toThrowError(
+      new InvalidCredentialsException(),
+    );
   });
 });
