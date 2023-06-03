@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-
-import { Repository } from 'typeorm';
 import { createMock } from '@golevelup/ts-jest';
+import { Repository } from 'typeorm';
+import { randomUUID } from 'crypto';
 
-import { UsersService } from '../users.service';
 import { User } from '@/core/models/entities';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { randomUUID } from 'crypto';
 import { CreateUserDto } from '@/core/models/user';
-import { UserErrors } from '../errors/user.errors';
+
+import { UsersService } from '../users.service';
+import { UserAlreadyRegisteredError } from '../errors/user.errors';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -116,8 +116,8 @@ describe('UsersService', () => {
     mockUsersRepository.findOne.mockResolvedValueOnce(savedUser);
 
     // Act / Assert
-    await expect(service.create(payload)).rejects.toThrow(
-      UserErrors.USER_ALREADY_EXISTS,
+    await expect(service.create(payload)).rejects.toThrowError(
+      new UserAlreadyRegisteredError(),
     );
   });
 });
