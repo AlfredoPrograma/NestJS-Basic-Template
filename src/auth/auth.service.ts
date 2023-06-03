@@ -9,6 +9,7 @@ import {
 import { UsersService } from '@/users/users.service';
 
 import { EncryptService } from './encrypt.service';
+import { InvalidCredentialsException } from './errors/auth.errors';
 
 @Injectable()
 export class AuthService {
@@ -33,17 +34,13 @@ export class AuthService {
   async signIn(payload: SignInUserDto): Promise<SignInResponse> {
     const foundUser = await this.usersService.findByEmail(payload.email);
 
-    if (!foundUser) {
-      throw new Error('User not found');
-    }
-
     const isValidPassword = await this.encryptService.validatePassword(
       payload.password,
-      foundUser.password,
+      foundUser?.password ?? '',
     );
 
-    if (!isValidPassword) {
-      throw new Error('Invalid password');
+    if (!isValidPassword || !foundUser) {
+      throw new InvalidCredentialsException();
     }
 
     const token = await this.encryptService.generateToken(foundUser.id);
