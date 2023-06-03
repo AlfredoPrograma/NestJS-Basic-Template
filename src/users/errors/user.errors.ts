@@ -1,4 +1,4 @@
-import { ServiceException } from '@/core/errors/service-exception.error';
+import { ServiceException } from '@/core/errors/service-exception/service-exception.error';
 import { ConflictException } from '@nestjs/common';
 
 export enum UserErrorsMessages {

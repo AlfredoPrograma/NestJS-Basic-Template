@@ -1,4 +1,4 @@
-import { ServiceException } from '@/core/errors/service-exception.error';
+import { ServiceException } from '@/core/errors/service-exception/service-exception.error';
 import { UnauthorizedException } from '@nestjs/common';
 
 export enum AuthErrorsMessages {
