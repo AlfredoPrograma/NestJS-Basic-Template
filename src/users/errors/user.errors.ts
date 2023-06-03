@@ -1,4 +1,4 @@
-import { ServiceException } from '@/core/errors/errors';
+import { ServiceException } from '@/core/errors/service-exception.error';
 import { ConflictException } from '@nestjs/common';
 
 export class UserAlreadyRegisteredError extends ServiceException {
