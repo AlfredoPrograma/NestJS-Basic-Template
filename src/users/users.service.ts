@@ -12,20 +12,16 @@ export class UsersService {
   ) {}
 
   async findByEmail(email: string): Promise<User> {
-    const foundUser = await this.usersRepository.findOne({ where: { email } });
-
-    return foundUser;
+    return await this.usersRepository.findOne({ where: { email } });
   }
 
   async create(payload: CreateUserDto): Promise<User> {
-    const foundUser = await this.findByEmail(payload.email);
+    const isRegisteredUser = await this.findByEmail(payload.email);
 
-    if (foundUser) {
+    if (isRegisteredUser) {
       throw new UserAlreadyRegisteredError();
     }
 
-    const createdUser = await this.usersRepository.save(payload);
-
-    return createdUser;
+    return await this.usersRepository.save(payload);
   }
 }
