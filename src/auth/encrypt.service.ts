@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
-// TODO: handle all async errors
 @Injectable()
 export class EncryptService {
   private jwt = jwt;
