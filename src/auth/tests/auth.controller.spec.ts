@@ -1,6 +1,6 @@
 import { Services } from '@/core/enums/services.enum';
 import { ServiceError } from '@/core/errors/ServiceError';
-import { User } from '@/core/models/user';
+import { SignInResponse, SignInUserDto, User } from '@/core/models/user';
 import { UserErrors } from '@/users/errors/user.errors';
 import { createMock } from '@golevelup/ts-jest';
 import { ConflictException } from '@nestjs/common';
@@ -76,5 +76,29 @@ describe('AuthController', () => {
       expect(error).toBeInstanceOf(ConflictException);
       expect(error.message).toEqual(UserErrors.USER_ALREADY_EXISTS);
     }
+  });
+
+  it('should return signed in user and token', async () => {
+    // Arrange
+    const signInUserPayload: SignInUserDto = {
+      email: 'test@mail.com',
+      password: '123456',
+    };
+
+    const signedInUserResponse: SignInResponse = {
+      token: 'token',
+      user: {
+        id: expect.any(String),
+        email: signInUserPayload.email,
+      },
+    };
+
+    mockAuthService.signIn.mockResolvedValueOnce(signedInUserResponse);
+
+    // Act
+    const signInResponse = await controller.signIn(signInUserPayload);
+
+    // Assert
+    expect(signInResponse).toEqual(signedInUserResponse);
   });
 });

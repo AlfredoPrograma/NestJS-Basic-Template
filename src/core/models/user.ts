@@ -16,3 +16,10 @@ export interface CreateUserDto {
   email: string;
   password: string;
 }
+
+export type SignInUserDto = CreateUserDto;
+
+export interface SignInResponse {
+  user: Pick<User, 'id' | 'email'>;
+  token: string;
+}

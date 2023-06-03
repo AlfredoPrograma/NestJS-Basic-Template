@@ -1,6 +1,13 @@
-import { CreateUserDto, User } from '@/core/models/user';
-import { UsersService } from '@/users/users.service';
 import { Injectable } from '@nestjs/common';
+
+import {
+  CreateUserDto,
+  SignInResponse,
+  SignInUserDto,
+  User,
+} from '@/core/models/user';
+import { UsersService } from '@/users/users.service';
+
 import { EncryptService } from './encrypt.service';
 
 @Injectable()
@@ -21,5 +28,32 @@ export class AuthService {
     });
 
     return newUser;
+  }
+
+  async signIn(payload: SignInUserDto): Promise<SignInResponse> {
+    const foundUser = await this.usersService.findByEmail(payload.email);
+
+    if (!foundUser) {
+      throw new Error('User not found');
+    }
+
+    const isValidPassword = await this.encryptService.validatePassword(
+      payload.password,
+      foundUser.password,
+    );
+
+    if (!isValidPassword) {
+      throw new Error('Invalid password');
+    }
+
+    const token = await this.encryptService.generateToken(foundUser.id);
+
+    return {
+      token,
+      user: {
+        email: foundUser.email,
+        id: foundUser.id,
+      },
+    };
   }
 }

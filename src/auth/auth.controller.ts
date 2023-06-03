@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 
 import { ErrorHandlers } from '@/core/errors/types';
-import { CreateUserDto } from '@/core/models/user';
+import { CreateUserDto, SignInUserDto } from '@/core/models/user';
 
 import { AuthService } from './auth.service';
 import { UserErrors } from '@/users/errors/user.errors';
@@ -27,6 +27,17 @@ export class AuthController {
   async signUp(@Body() payload: CreateUserDto) {
     try {
       return await this.authService.signUp(payload);
+    } catch (error) {
+      this.controlledErrors[error.message]?.(error);
+
+      throw new InternalServerErrorException();
+    }
+  }
+
+  @Post('sign-in')
+  async signIn(@Body() payload: SignInUserDto) {
+    try {
+      return await this.authService.signIn(payload);
     } catch (error) {
       this.controlledErrors[error.message]?.(error);
 

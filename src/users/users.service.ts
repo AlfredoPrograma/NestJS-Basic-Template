@@ -31,6 +31,7 @@ export class UsersService {
     }
 
     const createdUser = await this.usersRepository.save(payload);
+    console.log(createdUser);
 
     return createdUser;
   }
