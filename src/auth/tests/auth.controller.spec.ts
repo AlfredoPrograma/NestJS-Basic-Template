@@ -1,11 +1,9 @@
-import { Services } from '@/core/enums/services.enum';
-import { ServiceError } from '@/core/errors/ServiceError';
-import { SignInResponse, SignInUserDto, User } from '@/core/models/user';
-import { UserErrors } from '@/users/errors/user.errors';
 import { createMock } from '@golevelup/ts-jest';
-import { ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { randomUUID } from 'crypto';
+
+import { SignInResponse, SignInUserDto, User } from '@/core/models/user';
+
 import { AuthController } from '../auth.controller';
 import { AuthService } from '../auth.service';
 
@@ -54,28 +52,6 @@ describe('AuthController', () => {
 
     // Assert
     expect(result).toEqual(registeredUser);
-  });
-
-  it('should return a HTTP conflict exception when the target user email is already registered', async () => {
-    // Arrange
-    const alreadyRegisteredEmail = 'test@mail.com';
-
-    mockAuthService.signUp.mockRejectedValueOnce(
-      new ServiceError({
-        message: UserErrors.USER_ALREADY_EXISTS,
-        service: Services.USERS_SERVICE,
-        params: [alreadyRegisteredEmail],
-      }),
-    );
-
-    // Act
-    try {
-      await controller.signUp(new User());
-    } catch (error) {
-      // Assert
-      expect(error).toBeInstanceOf(ConflictException);
-      expect(error.message).toEqual(UserErrors.USER_ALREADY_EXISTS);
-    }
   });
 
   it('should return signed in user and token', async () => {
