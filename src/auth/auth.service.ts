@@ -43,10 +43,10 @@ export class AuthService {
       throw new InvalidCredentialsException();
     }
 
-    const token = await this.encryptService.generateToken(foundUser.id);
+    // const token = await this.encryptService.generateToken(foundUser.id);
 
     return {
-      token,
+      token: 'TODO ADD TOKEN',
       user: {
         email: foundUser.email,
         id: foundUser.id,

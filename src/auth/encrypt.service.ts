@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class EncryptService {
-  private jwt = jwt;
   private encrypter = bcrypt;
 
   async encryptPassword(password: string): Promise<string> {
@@ -23,11 +21,5 @@ export class EncryptService {
     );
 
     return isValid;
-  }
-
-  async generateToken(payload: string): Promise<string> {
-    const token = await this.jwt.sign(payload, 'secreto');
-
-    return token;
   }
 }
