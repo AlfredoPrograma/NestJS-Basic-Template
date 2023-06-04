@@ -25,7 +25,7 @@ describe('ServiceExceptionInterceptor', () => {
   });
 
   beforeEach(() => {
-    interceptor = new ServiceExceptionInterceptor();
+    interceptor = new ServiceExceptionInterceptor(false);
   });
 
   it('should be defined', () => {
