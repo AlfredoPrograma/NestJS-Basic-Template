@@ -62,7 +62,7 @@ describe('AuthController', () => {
     };
 
     const signedInUserResponse: SignInResponse = {
-      token: 'token',
+      accessToken: 'token',
       user: {
         id: expect.any(String),
         email: signInUserPayload.email,

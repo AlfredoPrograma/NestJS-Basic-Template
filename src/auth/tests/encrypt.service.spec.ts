@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { randomUUID } from 'crypto';
 import { EncryptService } from '../encrypt.service';
 
 describe('EncryptService', () => {
@@ -55,17 +54,5 @@ describe('EncryptService', () => {
 
     // Assert
     expect(isValid).toBe(false);
-  });
-
-  it('should return a token', async () => {
-    // Arrange
-    const userId = randomUUID();
-
-    // Act
-    const token = await service.generateToken(userId);
-
-    // Assert
-    expect(token).not.toBeNull();
-    expect(token).not.toEqual(userId);
   });
 });
