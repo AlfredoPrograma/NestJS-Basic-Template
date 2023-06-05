@@ -1,8 +1,8 @@
 import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
 import { Observable, catchError } from 'rxjs';
-import { isServiceException } from './service-exception.error';
+import { isApplicationException } from './application-exception.error';
 
-export class ServiceExceptionInterceptor implements NestInterceptor {
+export class ApplicationExceptionInterceptor implements NestInterceptor {
   constructor(private readonly isModeDebug) {}
 
   intercept(
@@ -17,7 +17,7 @@ export class ServiceExceptionInterceptor implements NestInterceptor {
           console.log(error);
         }
 
-        if (isServiceException(error) && contextType === 'http') {
+        if (isApplicationException(error) && contextType === 'http') {
           throw error.toHttp();
         }
 

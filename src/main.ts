@@ -1,7 +1,7 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
-import { ServiceExceptionInterceptor } from '@/core/errors/service-exception/service-exception.interceptor';
+import { ApplicationExceptionInterceptor } from '@/core/errors/application-exception/application-exception.interceptor';
 
 import { AppModule } from './app.module';
 
@@ -17,7 +17,7 @@ function setUpConfigs(app: INestApplication) {
     }),
   );
 
-  app.useGlobalInterceptors(new ServiceExceptionInterceptor(isModeDebug));
+  app.useGlobalInterceptors(new ApplicationExceptionInterceptor(isModeDebug));
 }
 
 async function bootstrap() {

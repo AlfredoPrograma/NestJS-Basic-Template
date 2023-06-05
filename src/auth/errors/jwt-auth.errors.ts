@@ -1,4 +1,4 @@
-import { ServiceException } from '@/core/errors/service-exception/service-exception.error';
+import { ApplicationException } from '@/core/errors/application-exception/application-exception.error';
 
 import { UnauthorizedException } from '@nestjs/common';
 
@@ -7,7 +7,7 @@ export enum JwtErrorMessages {
   INVALID_TOKEN = 'Invalid token',
 }
 
-export class MalformedTokenException extends ServiceException {
+export class MalformedTokenException extends ApplicationException {
   constructor() {
     super();
     this.message = JwtErrorMessages.MALFORMED_TOKEN;
@@ -18,7 +18,7 @@ export class MalformedTokenException extends ServiceException {
   }
 }
 
-export class InvalidTokenException extends ServiceException {
+export class InvalidTokenException extends ApplicationException {
   constructor() {
     super();
     this.message = JwtErrorMessages.INVALID_TOKEN;

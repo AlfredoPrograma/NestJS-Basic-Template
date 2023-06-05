@@ -1,10 +1,10 @@
-import { ServiceException } from '@/core/errors/service-exception/service-exception.error';
+import { ApplicationException } from '@/core/errors/application-exception/application-exception.error';
 import { ConflictException } from '@nestjs/common';
 
 export enum UserErrorsMessages {
   USER_ALREADY_REGISTERED = 'User already registered',
 }
-export class UserAlreadyRegisteredError extends ServiceException {
+export class UserAlreadyRegisteredError extends ApplicationException {
   constructor() {
     super();
     this.message = UserErrorsMessages.USER_ALREADY_REGISTERED;

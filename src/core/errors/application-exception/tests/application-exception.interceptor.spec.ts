@@ -2,10 +2,10 @@ import { CallHandler, ExecutionContext, HttpException } from '@nestjs/common';
 import { createMock } from '@golevelup/ts-jest';
 import { lastValueFrom, throwError } from 'rxjs';
 
-import { ServiceExceptionInterceptor } from '../service-exception.interceptor';
-import { ServiceException } from '../service-exception.error';
+import { ApplicationExceptionInterceptor } from '../application-exception.interceptor';
+import { ApplicationException } from '../application-exception.error';
 
-class TestServiceException extends ServiceException {
+class TestServiceException extends ApplicationException {
   constructor() {
     super();
     this.message = 'Test exception';
@@ -17,7 +17,7 @@ class TestServiceException extends ServiceException {
 }
 
 describe('ServiceExceptionInterceptor', () => {
-  let interceptor: ServiceExceptionInterceptor;
+  let interceptor: ApplicationExceptionInterceptor;
 
   const mockExecutionContext = createMock<ExecutionContext>();
   const mockCallHandler = createMock<CallHandler>({
@@ -25,7 +25,7 @@ describe('ServiceExceptionInterceptor', () => {
   });
 
   beforeEach(() => {
-    interceptor = new ServiceExceptionInterceptor(false);
+    interceptor = new ApplicationExceptionInterceptor(false);
   });
 
   it('should be defined', () => {

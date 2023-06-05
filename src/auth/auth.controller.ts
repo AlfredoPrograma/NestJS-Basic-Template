@@ -23,6 +23,6 @@ export class AuthController {
   @Get('test')
   @PrivateAccess()
   async test(@Req() req: Request) {
-    return req.user;
+    return req?.user;
   }
 }
