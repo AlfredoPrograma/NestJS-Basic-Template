@@ -5,6 +5,10 @@ import { JwtService } from '@nestjs/jwt';
 
 import { JwtAuthGuard } from '../jwt-auth.guard';
 import { ExecutionContext } from '@nestjs/common';
+import {
+  InvalidTokenException,
+  MalformedTokenException,
+} from '../errors/jwt-auth.errors';
 
 describe('JwtAuthGuard', () => {
   let guard: JwtAuthGuard;
@@ -76,7 +80,7 @@ describe('JwtAuthGuard', () => {
 
     // Act & Assert
     await expect(guard.canActivate(mockExecutionContext)).rejects.toThrowError(
-      'Malformed token',
+      new MalformedTokenException(),
     );
   });
 
@@ -99,7 +103,7 @@ describe('JwtAuthGuard', () => {
 
     // Act & Assert
     await expect(guard.canActivate(mockExecutionContext)).rejects.toThrowError(
-      'Invalid token',
+      new InvalidTokenException(),
     );
   });
 });

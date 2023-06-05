@@ -3,12 +3,15 @@ import {
   ExecutionContext,
   Injectable,
   SetMetadata,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import {
+  InvalidTokenException,
+  MalformedTokenException,
+} from './errors/jwt-auth.errors';
 
 export enum ACCESS_KEYS {
   PRIVATE = 'PRIVATE_ACCESS',
@@ -28,7 +31,7 @@ export class JwtAuthGuard implements CanActivate {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
 
     if (type !== 'Bearer' || !token) {
-      throw new UnauthorizedException('Malformed token');
+      throw new MalformedTokenException();
     }
 
     return token;
@@ -42,7 +45,7 @@ export class JwtAuthGuard implements CanActivate {
 
       return payload;
     } catch (err) {
-      throw new UnauthorizedException('Invalid token');
+      throw new InvalidTokenException();
     }
   }
 
