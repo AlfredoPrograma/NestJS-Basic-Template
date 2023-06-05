@@ -9,5 +9,7 @@ interface Environment {
   DB_NAME: string;
   DB_HOST: string;
   DB_PORT: number;
+
+  JWT_SECRET: string;
   NODE_ENV: 'development' | 'production';
 }

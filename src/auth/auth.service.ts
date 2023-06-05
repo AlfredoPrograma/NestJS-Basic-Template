@@ -10,10 +10,12 @@ import { UsersService } from '@/users/users.service';
 
 import { EncryptService } from './encrypt.service';
 import { InvalidCredentialsException } from './errors/auth.errors';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private readonly jwtService: JwtService,
     private readonly encryptService: EncryptService,
     private readonly usersService: UsersService,
   ) {}
@@ -43,10 +45,12 @@ export class AuthService {
       throw new InvalidCredentialsException();
     }
 
-    // const token = await this.encryptService.generateToken(foundUser.id);
+    const accessToken = await this.jwtService.signAsync({
+      sub: foundUser.id,
+    });
 
     return {
-      token: 'TODO ADD TOKEN',
+      accessToken,
       user: {
         email: foundUser.email,
         id: foundUser.id,

@@ -21,5 +21,5 @@ export type SignInUserDto = CreateUserDto;
 
 export interface SignInResponse {
   user: Pick<User, 'id' | 'email'>;
-  token: string;
+  accessToken: string;
 }
