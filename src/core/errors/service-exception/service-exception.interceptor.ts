@@ -5,14 +5,19 @@ import { isServiceException } from './service-exception.error';
 export class ServiceExceptionInterceptor implements NestInterceptor {
   constructor(private readonly isModeDebug) {}
 
-  intercept(_: ExecutionContext, next: CallHandler<Error>): Observable<Error> {
+  intercept(
+    context: ExecutionContext,
+    next: CallHandler<Error>,
+  ): Observable<Error> {
     return next.handle().pipe(
       catchError((error: Error) => {
+        const contextType = context.getType();
+
         if (this.isModeDebug) {
           console.log(error);
         }
 
-        if (isServiceException(error)) {
+        if (isServiceException(error) && contextType === 'http') {
           throw error.toHttp();
         }
 
