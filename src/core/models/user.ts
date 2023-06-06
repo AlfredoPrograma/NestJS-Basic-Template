@@ -23,3 +23,10 @@ export interface SignInResponse {
   user: Pick<User, 'id' | 'email'>;
   accessToken: string;
 }
+
+export interface CurrentUserPayload {
+  sub: string;
+}
+export interface CurrentUserFromToken extends CurrentUserPayload {
+  iat: number;
+}

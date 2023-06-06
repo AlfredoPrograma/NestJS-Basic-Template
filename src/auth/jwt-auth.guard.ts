@@ -1,9 +1,4 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  SetMetadata,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
@@ -12,12 +7,7 @@ import {
   InvalidTokenException,
   MalformedTokenException,
 } from './errors/jwt-auth.errors';
-
-export enum ACCESS_KEYS {
-  PRIVATE = 'PRIVATE_ACCESS',
-}
-
-export const PrivateAccess = () => SetMetadata(ACCESS_KEYS.PRIVATE, true);
+import { ACCESS_KEYS } from './decorators/access-control.decorator';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {

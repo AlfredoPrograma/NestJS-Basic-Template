@@ -1,10 +1,14 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 
-import { CreateUserDto, SignInUserDto } from '@/core/models/user';
+import {
+  CreateUserDto,
+  CurrentUserFromToken,
+  SignInUserDto,
+} from '@/core/models/user';
 
 import { AuthService } from './auth.service';
-import { Request } from 'express';
-import { PrivateAccess } from './jwt-auth.guard';
+import { PrivateAccess } from './decorators/access-control.decorator';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -22,7 +26,7 @@ export class AuthController {
 
   @Get('test')
   @PrivateAccess()
-  async test(@Req() req: Request) {
-    return req?.user;
+  async test(@CurrentUser() user: CurrentUserFromToken) {
+    return user;
   }
 }
